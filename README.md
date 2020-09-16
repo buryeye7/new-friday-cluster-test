@@ -1,1 +1,1 @@
-# new-friday-cluster-test
+# ch-cluster-test
