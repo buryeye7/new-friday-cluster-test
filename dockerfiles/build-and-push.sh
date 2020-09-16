@@ -1,13 +1,13 @@
 #!/bin/bash
 
-cd gaia-seed
+cd friday-seed
 pwd
-docker build --no-cache --tag buryeye7/gaia-seed:latest .
-docker push buryeye7/gaia-seed:latest
+docker build --no-cache --tag buryeye7/friday-seed:latest .
+docker push buryeye7/friday-seed:latest
 
 cd ..
-cd gaia-node
+cd friday-node
 pwd
-docker build --no-cache --tag buryeye7/gaia-node:latest .
-docker push buryeye7/gaia-node:latest
+docker build --no-cache --tag buryeye7/friday-node:latest .
+docker push buryeye7/friday-node:latest
 

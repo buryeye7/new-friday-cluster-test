@@ -1,4 +1,4 @@
-FROM buryeye7/gaia-base
+FROM buryeye7/friday-seed
 
 USER root
 ENV HOME=/root
@@ -10,8 +10,8 @@ ENV PATH=$PATH:$HOME/.cargo/bin:$GOPATH/bin:$GOROOT/bin
 WORKDIR $HOME
 
 WORKDIR $GOPATH/src
-RUN git clone https://github.com/buryeye7/ch-cluster-test
-WORKDIR $GOPATH/src/ch-cluster-test
+RUN git clone https://github.com/buryeye7/new-friday-cluster-test
+WORKDIR $GOPATH/src/new-friday-cluster-test
 
 EXPOSE 26656/tcp
 EXPOSE 26657/tcp

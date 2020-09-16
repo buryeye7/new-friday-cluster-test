@@ -19,10 +19,10 @@ RUN yum -y install telnet
 RUN yum -y install net-tools 
 
 WORKDIR $GOPATH/src
-RUN git clone https://github.com/cosmos/gaia
-WORKDIR $GOPATH/src/gaia
-RUN git checkout v1.0.0
+RUN git clone https://github.com/rizon-world/friday
+WORKDIR $GOPATH/src/friday
+#RUN git checkout v1.0.0
 RUN make install
 
-RUN gaiad version --long
-RUN gaiacli version --long
+RUN nodef version --long
+RUN clif version --long

@@ -3,24 +3,24 @@
 COUCHDB="http://admin:admin@couchdb-app-svc:5984"
 PW="12345678"
 
-mkdir -p $HOME/.gaiad
-mkdir -p $HOME/.gaiacli
+mkdir -p $HOME/.nodef
+mkdir -p $HOME/.clif
 
-cp -rf $GOPATH/src/ch-cluster-test/config/gaiad-config/* $HOME/.gaiad
-cp -rf $GOPATH/src/ch-cluster-test/config/gaiacli-config/* $HOME/.gaiacli
-sed -i "s/prometheus = false/prometheus = true/g" $HOME/.gaiad/config/config.toml
+cp -rf $GOPATH/src/new-friday-cluster-test/config/nodef-config/* $HOME/.nodef
+cp -rf $GOPATH/src/new-friday-cluster-test/config/clif-config/* $HOME/.clif
+sed -i "s/prometheus = false/prometheus = true/g" $HOME/.nodef/config/config.toml
 
-gaiacli config chain-id testnet
+clif config chain-id testnet
 
-ps -ef | grep gaiad | while read line
+ps -ef | grep nodef | while read line
 do
-    if [[ $line == *"gaiad"* ]];then
+    if [[ $line == *"nodef"* ]];then
         target=$(echo $line |  awk -F' ' '{print $2}')
         kill -9 $target
     fi
 done
 
-NODE_ID=$(gaiad tendermint show-node-id)
+NODE_ID=$(nodef tendermint show-node-id)
 IP_ADDRESS=$(hostname -I)
 IP_ADDRESS=$(echo $IP_ADDRESS)
 
@@ -28,11 +28,11 @@ curl -X PUT $COUCHDB/seed-info/seed-info -d "{\"target\":\"${NODE_ID}@${IP_ADDRE
 
 for i in $(seq 1 $WALLET_CNT)
 do
-    wallet_address=$(gaiacli keys show node$i -a)
+    wallet_address=$(clif keys show node$i -a)
     echo $wallet_address
     curl -X PUT $COUCHDB/seed-wallet-info/$wallet_address -d "{\"wallet_alias\":\"node$i\"}"
 done
 
-gaiad start 2>/dev/null &
+nodef start 2>/dev/null &
 sleep 20
-gaiacli rest-server --chain-id=testnet --laddr tcp://0.0.0.0:1317 
+clif rest-server --chain-id=testnet --laddr tcp://0.0.0.0:1317 
