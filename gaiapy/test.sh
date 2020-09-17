@@ -99,11 +99,11 @@ do
     sleep 10
 done
 
-COUNT=$(curl $COUCHDB/input-address/_all_docs 2>/dev/null | jq '.rows | length')
-COUNT=$((COUNT - 1))
+IA_COUNT=$(curl $COUCHDB/input-address/_all_docs 2>/dev/null | jq '.rows | length')
+IA_COUNT=$((IA_COUNT - 1))
 PRIV_KEYS=()
 ACCOUNT_NUMS=()
-for i in $(seq 0 $COUNT)
+for i in $(seq 0 $IA_COUNT)
 do
     key=$(curl $COUCHDB/input-address/_all_docs 2>/dev/null | jq .rows[$i].key | sed "s/\"//g")
     PRIV_KEYS[$i]=$(curl $COUCHDB/input-address/$key 2>/dev/null | jq .private_key| sed "s/\"//g")
@@ -139,15 +139,19 @@ done < /tmp/svcs.txt
 rm -rf transfer-to-log*
 rm test-info-after-mempool-full.txt
 touch test-info-after-mempool-full.txt
-ADDRESS_CNT=$((i - 1))
-for i in $(seq 0 $ADDRESS_CNT)
+ADDRESS_NUM=$i
+#ADDRESS_CNT=$((i - 1))
+#for i in $(seq 0 $ADDRESS_CNT)
+for i in $(seq 0 $IA_COUNT)
 do
-    j=$((i+1))
+    node_index=$((i%$ADDRESS_NUM))
+    echo ${NODE_ADDRESSES[$node_index]} ${PRIV_KEYS[$i]} ${ACCOUNT_NUMS[$i]} >> test-info-after-mempool-full.txt
+
     #mod=$((j%3))
-    if [ $j -lt 7 ];then
-        echo ${NODE_ADDRESSES[$i]} ${PRIV_KEYS[$i]} ${ACCOUNT_NUMS[$i]} >> test-info-after-mempool-full.txt
-        continue
-    fi
-    echo ${NODE_ADDRESSES[$i]} ${PRIV_KEYS[$i]} ${ACCOUNT_NUMS[$i]} > transfer-to-log$j.txt
-    ./transfer-to.py ${NODE_ADDRESSES[$i]} ${PRIV_KEYS[$i]} ${ACCOUNT_NUMS[$i]} >> transfer-to-log$j.txt $i &
+    #if [ $j -lt 7 ];then
+    #    echo ${NODE_ADDRESSES[$i]} ${PRIV_KEYS[$i]} ${ACCOUNT_NUMS[$i]} >> test-info-after-mempool-full.txt
+    #    continue
+    #fi
+    #echo ${NODE_ADDRESSES[$i]} ${PRIV_KEYS[$i]} ${ACCOUNT_NUMS[$i]} > transfer-to-log$j.txt
+    #./transfer-to.py ${NODE_ADDRESSES[$i]} ${PRIV_KEYS[$i]} ${ACCOUNT_NUMS[$i]} >> transfer-to-log$j.txt $i &
 done

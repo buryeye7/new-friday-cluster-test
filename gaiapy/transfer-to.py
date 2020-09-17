@@ -15,7 +15,7 @@ print("privkey " + privkey)
 
 i=0
 #for i in range(10000):
-while i < 10000:
+while i < 1000000:
         print("count", i)
         tx = Transaction(
                 privkey=privkey,
@@ -25,9 +25,9 @@ while i < 10000:
                 gas=70000,
                 memo="",
                 chain_id="testnet",
-                sync_mode="sync"
+                sync_mode="async"
             )
-        amount = (i+1)%100 + 1
+        amount = (i+1)%1000 + 1
         try:
             tx.add_transfer(recipient="cosmos19t5wd4u9euv2etjgcqtjf3gg5v76j0m8rse8w8", amount=amount) 
             pushable_tx=tx.get_pushable()

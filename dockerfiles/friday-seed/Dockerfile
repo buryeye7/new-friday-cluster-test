@@ -1,4 +1,4 @@
-FROM buryeye7/friday-seed
+FROM buryeye7/friday-base
 
 USER root
 ENV HOME=/root

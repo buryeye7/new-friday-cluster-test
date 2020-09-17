@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gaia-node{NO}
-          image: buryeye7/gaia-node:latest
+          image: buryeye7/friday-node:latest
           command: ["./scripts/start-node.sh"]
           env:
             - name: TARGET

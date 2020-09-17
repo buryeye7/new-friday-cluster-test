@@ -125,7 +125,7 @@ curl -X PUT $COUCHDB/wallet-address
 curl -X PUT $COUCHDB/input-address
 curl -X PUT $COUCHDB/seed-wallet-info
 
-for i in {1..10}
+for i in {1..50}
 do
     data=$(../gaiapy/make-wallet.py)
     curl -X PUT $COUCHDB/input-address/$i -d "$data"  

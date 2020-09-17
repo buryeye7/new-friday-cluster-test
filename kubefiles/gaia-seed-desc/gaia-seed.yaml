@@ -19,9 +19,9 @@ spec:
             - name: COUCHDB
               value: couchdb-app-svc
             - name: TARGET 
-              value: {TARGET}
+              value: 
             - name: WALLET_CNT
-              value: {WALLET_CNT}
+              value: "9"
           command: ["./scripts/start-seed.sh"]
           ports:
             - name: rpc
@@ -36,4 +36,4 @@ spec:
             - name: prometheus
               containerPort: 26660
               protocol: TCP
-      nodeName: {NODE_NAME} 
+      nodeName: ip-172-20-37-143.ap-northeast-1.compute.internal 
