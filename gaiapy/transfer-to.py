@@ -10,6 +10,7 @@ from cosmospy import Transaction
 host="http://" + sys.argv[1] + ":1317/txs"
 privkey=sys.argv[2]
 account_num=sys.argv[3]
+recipient="friday12e4px0gq573726l4rcey2cne0dvsfypc78veyc"
 print("host " + host)
 print("privkey " + privkey)
 
@@ -29,7 +30,7 @@ while i < 1000000:
             )
         amount = (i+1)%1000 + 1
         try:
-            tx.add_transfer(recipient="cosmos19t5wd4u9euv2etjgcqtjf3gg5v76j0m8rse8w8", amount=amount) 
+            tx.add_transfer(recipient=recipient, amount=amount) 
             pushable_tx=tx.get_pushable()
             print(pushable_tx)
             headers = {'Content-Type': 'application/json; charset=utf-8'}

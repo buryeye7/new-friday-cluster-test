@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import sys
-sys.path.append("/home/ubuntu/workspace/cosmospy")
+#sys.path.append("/home/ubuntu/workspace/cosmospy")
 
 from cosmospy import generate_wallet
 

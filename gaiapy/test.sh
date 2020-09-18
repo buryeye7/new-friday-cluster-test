@@ -6,8 +6,8 @@ check_sync() {
     gaia_node3=$(kubectl get pods | grep gaia-node3 | awk -F' ' '{print $1}')
     while true
     do
-        seed_height=$(kubectl exec $gaia_seed --container gaia-seed -- gaiacli query block --chain-id=testnet --trust-node | jq .block.header.height | sed "s/\"//g")
-        node3_height=$(kubectl exec $gaia_node3 --container gaia-node3 -- gaiacli query block --chain-id=testnet --trust-node | jq .block.header.height | sed "s/\"//g")
+        seed_height=$(kubectl exec $gaia_seed --container gaia-seed -- clif query block --chain-id=testnet --trust-node | jq .block.header.height | sed "s/\"//g")
+        node3_height=$(kubectl exec $gaia_node3 --container gaia-node3 -- clif query block --chain-id=testnet --trust-node | jq .block.header.height | sed "s/\"//g")
         echo "check_sync: $seed_height $node3_height"
         if [ $seed_height == $node3_height ];then
             break
@@ -49,7 +49,7 @@ do
     wallet_address=$(curl $COUCHDB/seed-wallet-info/_all_docs 2>/dev/null | jq .rows[$i].key | sed "s/\"//g")
     expect -c "
     set timeout 3
-    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- gaiacli tx send node $wallet_address $AMOUNT --chain-id testnet --trust-node
+    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- clif tx send node $wallet_address $AMOUNT --chain-id testnet --trust-node
     expect "y/N]:"
         send \"y\\r\"
     expect "\'node\':"
@@ -59,7 +59,7 @@ do
     sleep $INTERVAL
     expect -c "
     set timeout 3
-    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- gaiacli tx send node $wallet_address $STAKE_AMOUNT --chain-id testnet --trust-node
+    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- clif tx send node $wallet_address $STAKE_AMOUNT --chain-id testnet --trust-node
     expect "y/N]:"
         send \"y\\r\"
     expect "\'node\':"
@@ -89,7 +89,7 @@ do
     CNT=$((CNT + 1))
     expect -c "
     set timeout 3
-    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- gaiacli tx staking create-validator --amount=$STAKE_AMOUNT --pubkey=$node_pubkey --moniker=solution$i --chain-id=testnet --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1" --gas="auto" --fees="1uatom" --from $wallet_alias   
+    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- clif tx staking create-validator --amount=$STAKE_AMOUNT --pubkey=$node_pubkey --moniker=solution$i --chain-id=testnet --commission-rate="0.10" --commission-max-rate="0.20" --commission-max-change-rate="0.01" --min-self-delegation="1" --gas="auto" --fees="1uatom" --from $wallet_alias   
     expect "y/N]:"
         send \"y\\r\"
     expect "\'$wallet_alias\':"
@@ -110,7 +110,7 @@ do
     address=$(curl $COUCHDB/input-address/$key 2>/dev/null | jq .address | sed "s/\"//g")
     expect -c "
     set timeout 3
-    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- gaiacli tx send node $address $AMOUNT --chain-id=testnet --trust-node
+    spawn kubectl exec $GAIA_SEED -it --container gaia-seed -- clif tx send node $address $AMOUNT --chain-id=testnet --trust-node
     expect "y/N]:"
         send \"y\\r\"
     expect "\'node\':"
@@ -119,7 +119,7 @@ do
     "
     echo ${PRIV_KEYS[$i]}
     sleep 10
-    ACCOUNT_NUMS[$i]=$(kubectl exec $GAIA_SEED -it --container gaia-seed -- gaiacli query account $address --trust-node | grep accountnumber | sed "s/accountnumber://g" | sed 's/ //g' | sed "s/\r//g" | sed "s/\n//g")
+    ACCOUNT_NUMS[$i]=$(kubectl exec $GAIA_SEED -it --container gaia-seed -- clif query auth account $address --trust-node | grep accountnumber | sed "s/accountnumber://g" | sed 's/ //g' | sed "s/\r//g" | sed "s/\n//g")
 done
 
 wait_lb_ready
