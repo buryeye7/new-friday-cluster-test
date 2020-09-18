@@ -40,5 +40,7 @@ NODE_ID=$(nodef tendermint show-node-id)
 
 curl -X PUT $COUCHDB/wallet-address/$WALLET_ADDRESS -d "{\"type\":\"full-node\",\"node_pub_key\":\"$NODE_PUB_KEY\",\"node_id\":\"$NODE_ID\", \"wallet_alias\":\"$WALLET_ALIAS\"}"
 
-clif rest-server --chain-id=testnet --laddr tcp://0.0.0.0:1317 > clif.log 2>&1 &
-nodef start > /tmp/nodef.log
+nodef start 2>&1 > /tmp/nodef.log &
+sleep 20
+clif rest-server --chain-id=testnet --laddr tcp://0.0.0.0:1317 2>&1 > /tmp/clif.log 
+

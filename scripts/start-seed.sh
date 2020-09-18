@@ -33,5 +33,6 @@ do
     curl -X PUT $COUCHDB/seed-wallet-info/$wallet_address -d "{\"wallet_alias\":\"node$i\"}"
 done
 
-clif rest-server --chain-id=testnet --laddr tcp://0.0.0.0:1317 > clif.log 2>&1 &
-nodef start > /tmp/nodef.log 
+nodef start 2>&1 > /tmp/nodef.log &
+sleep 20
+clif rest-server --chain-id=testnet --laddr tcp://0.0.0.0:1317 2>&1 > /tmp/clif.log 
