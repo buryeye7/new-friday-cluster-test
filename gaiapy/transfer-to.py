@@ -28,7 +28,7 @@ while i < 1000000:
                 chain_id="testnet",
                 sync_mode="async"
             )
-        amount = (i+1)%1000 + 1
+        amount = (i+1)%100 + 1
         try:
             tx.add_transfer(recipient=recipient, amount=amount) 
             pushable_tx=tx.get_pushable()
@@ -40,6 +40,9 @@ while i < 1000000:
             print(res.text)
             if not "code" in res.text:
                 i += 1
+            json_res = json.loads(res.text)
+            res=requests.get('/'.join([host, json_res.txhash]))
+            print("query", json_res.txhash, res.text)
         except:
             print("exception happened", sys.exc_info()[0])
         

@@ -92,7 +92,7 @@ kubectl delete -f ./gaia-seed-desc/gaia-seed.yaml
 
 NAME_ARRAY=()
 i=0
-kubectl get nodes > nodes.txt
+kubectl get nodes > /tmp/nodes.txt
 while read line
 do
     if [[ $line == *"NAME"* ]] || [[ $line == *"master"* ]];then
@@ -100,7 +100,7 @@ do
     fi
     NAME_ARRAY[$i]=$(echo $line | awk -F' ' '{print $1}')
     i=$((i + 1))
-done < nodes.txt
+done < /tmp/nodes.txt
 KUBE_NODE_NO=$i
 
 INDEX=0

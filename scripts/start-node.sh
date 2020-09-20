@@ -33,6 +33,7 @@ cp -f $GOPATH/src/new-friday-cluster-test/config/nodef-config/config/genesis.jso
 SEED=$(curl $COUCHDB/seed-info/seed-info | jq .target)
 sed -i "s/seeds = \"\"/seeds = $SEED/g" $HOME/.nodef/config/config.toml
 sed -i "s/prometheus = false/prometheus = true/g" $HOME/.nodef/config/config.toml
+sed -i "s/size = 5000/size = 10000/g" $HOME/.nodef/config/config.toml
 
 WALLET_ADDRESS=$(clif keys show node -a)
 NODE_PUB_KEY=$(nodef tendermint show-validator)
