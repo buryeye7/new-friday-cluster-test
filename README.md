@@ -10,7 +10,7 @@ Prerequsite
 
 Procedure
 1. Run "./kops/make-cluster.sh create {kubernetes_node_number}", which is for creating the k8s nodes. If you want, you can edit the script to modify configuration of kubernetes. {kubernetes_node_number} must be greater than or equal to 6 and be a multiple of 3.\
-    Example)If {k8s_node_number} is 12,
+    Example) If {k8s_node_number} is 12,
     - Three nodes of them are assigned to Grafana, Prometheus, CouchDB respectively.
     - The remaining 9 nodes are used for friday nodes.
 
