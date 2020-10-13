@@ -3,7 +3,8 @@ The Friday nodes are going to run automatically after doing the procedure below.
 
 Prerequsite
 1. Install aws-cli.
-2. Set the credentials of aws-cli to kops (IAM) - Refer to kops/init-kops.sh.
+2. Set the credentials of aws-cli to kops (IAM) 
+    - Refer to kops/init-kops.sh.
 3. Install kops.
 4. Install kubectl.
 
@@ -14,7 +15,7 @@ Procedure
     - Three nodes of them are assigned to Grafana, Prometheus, CouchDB respectively.
     - The remaining 9 nodes are used for friday nodes.
 
-2. Open the following ports on the K8s nodes .
+2. Open the following ports on the K8s nodes.
     - 30300, for the Grafana
     - 30990, for the Prometheus
     - 30598, for the CouchDB
