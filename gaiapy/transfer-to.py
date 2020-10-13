@@ -4,6 +4,7 @@ import sys
 import requests
 import json
 from cosmospy import Transaction
+import time
 
 #privkey="ef10157a847bf6d99d25bc1c4b9c99c3230538ceaa918703a6fe50dd7c502071"
 #host="http://localhost:1317/txs"
@@ -40,9 +41,11 @@ while i < 1000000:
             print(res.text)
             if not "code" in res.text:
                 i += 1
-            json_res = json.loads(res.text)
-            res=requests.get('/'.join([host, json_res.txhash]))
-            print("query", json_res.txhash, res.text)
+            #json_res = json.loads(res.text)
+            #print("json_res[\"txhash\"]", json_res['txhash'])
+            #time.sleep(2)
+            #res=requests.get('/'.join([host, json_res['txhash']]))
+            #print("query", json_res['txhash'], res.text)
         except:
             print("exception happened", sys.exc_info()[0])
         
