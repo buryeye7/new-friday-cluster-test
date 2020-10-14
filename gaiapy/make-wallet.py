@@ -3,7 +3,7 @@
 import sys
 #sys.path.append("/home/ubuntu/workspace/cosmospy")
 
-from cosmospy import generate_wallet
+from fridaypy import generate_wallet
 
 wallet = generate_wallet()
 #print(wallet)

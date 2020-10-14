@@ -7,6 +7,7 @@ Prerequsite
     - Refer to kops/init-kops.sh.
 3. Install kops.
 4. Install kubectl.
+5. Install python3
 
 Procedure
 1. Run "./kops/make-cluster.sh create {kubernetes_node_number}", which is for creating the k8s nodes. If you want, you can edit the script to modify configuration of kubernetes. {kubernetes_node_number} must be greater than or equal to 6 and be a multiple of 3.\
@@ -20,8 +21,10 @@ Procedure
     - 30598, for the CouchDB
     - 26660, for the Prometheus SRC Server
         
-3. Run "./kubefiles/deploy-node.sh".
+3. Run "pip3 install -r requirements.txt" in the ./gaiapy/fridaypy
 
-4. Run "./gaiapy/shot.sh".
+4. Run "./kubefiles/deploy-node.sh".
+
+5. Run "./gaiapy/shot.sh".
 
 If all procedures are successful, you can connect to {K8S_NODE_IP}:30300 and see the Grafana screen.

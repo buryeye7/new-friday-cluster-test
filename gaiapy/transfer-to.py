@@ -3,7 +3,7 @@
 import sys
 import requests
 import json
-from cosmospy import Transaction
+from fridaypy import Transaction
 import time
 
 #privkey="ef10157a847bf6d99d25bc1c4b9c99c3230538ceaa918703a6fe50dd7c502071"
